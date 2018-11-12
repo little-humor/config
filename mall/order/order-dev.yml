@@ -1,40 +1,36 @@
 server:
   port: 8082
+  servlet:
+    context-path: /order-server
 spring:
   application:
     name: order-server
-  sleuth:
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://localhost:9411
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/order_db
+    url: jdbc:mysql://119.18.193.77:3306/order_db
     username: root
-    password: 123321!
+    password: dzm123%*
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
 
-mybatis:
-  mapper-locations: classpath:mappers/*.xml
-  type-aliases-package: com.humor.pojo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka.springcloud.cn/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
 
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
-
-swagger:
-  basePackage: com.humor.user.controller
-  title: 微服务、分布式实践
-  description: 笑而不语，痛而不言
-  contact:
-    name: humor
-    email: guxingying@live.cn
-    url: http://localhost:8089
-
-
-
-
-
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+feign:
+  hystrix:
+    enabled: true
