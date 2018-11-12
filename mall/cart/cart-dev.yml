@@ -1,44 +1,54 @@
 server:
   port: 8081
+  servlet:
+    context-path: /cart-server
 spring:
   application:
     name: cart-server
-  zipkin:
-    base-url: http://localhost:9411/
-  sleuth:
-    sampler:
-      percentage: 1.0
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 123321!
-    url: jdbc:mysql://localhost:3306/cart_db
+    password: dzm123%*
+    url: jdbc:mysql://119.18.193.77:3306/cart_db
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+  devtools:
+    restart:
+      enabled: true
+      exclude: static/*
 
-mybatis:
-  mapper-locations: classpath:mappers/*.xml
-  type-aliases-package: com.humor.pojo
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka.springcloud.cn/eureka
 
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: false
+      min-request-size: 2048
+      mime-types: text/xml,application/xml,application/json
+    response:
+      enabled: false
+  client:
+    default-config: default
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 logging:
-  level: com.codingapi=debug
-
-
-swagger:
-  basePackage: com.humor.user.controller
-  title: 微服务、分布式实践
-  description: 笑而不语，痛而不言
-  contact:
-    name: humor
-    email: guxingying@live.cn
-    url: http://localhost:8089
-
-
-
-
-
-
+  level:
+    com.humor.cart.service.api.ProductService: debug
